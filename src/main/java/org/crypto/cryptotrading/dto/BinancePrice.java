@@ -1,6 +1,5 @@
 package org.crypto.cryptotrading.dto;
 
-import java.math.BigDecimal;
 
 public class BinancePrice {
   private String symbol;

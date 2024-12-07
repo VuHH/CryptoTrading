@@ -2,8 +2,6 @@ package org.crypto.cryptotrading.dto;
 
 import lombok.*;
 
-import java.math.BigDecimal;
-
 public class HuobiPrice {
   private String symbol;
   private double open;

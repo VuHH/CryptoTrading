@@ -1,15 +1,14 @@
 package org.crypto.cryptotrading.dto.mapper;
 
-import org.crypto.cryptotrading.dto.BinancePrice;
-import org.crypto.cryptotrading.dto.HuobiPrice;
-import org.crypto.cryptotrading.entity.Crypto;
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.crypto.cryptotrading.dto.BinancePrice;
+import org.crypto.cryptotrading.dto.HuobiPrice;
+import org.crypto.cryptotrading.entity.Crypto;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CryptoMapper {

@@ -1,5 +1,6 @@
 package org.crypto.cryptotrading.controller;
 
+import java.util.Map;
 import org.crypto.cryptotrading.dto.TradingRequest;
 import org.crypto.cryptotrading.service.TradingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/trade")

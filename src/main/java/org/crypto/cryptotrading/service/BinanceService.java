@@ -1,13 +1,12 @@
 package org.crypto.cryptotrading.service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.crypto.cryptotrading.dto.BinancePrice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BinanceService {

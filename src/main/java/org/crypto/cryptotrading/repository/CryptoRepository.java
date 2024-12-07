@@ -1,13 +1,12 @@
 package org.crypto.cryptotrading.repository;
 
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import org.crypto.cryptotrading.entity.Crypto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
 
 @Repository
 public interface CryptoRepository extends JpaRepository<Crypto, Long> {

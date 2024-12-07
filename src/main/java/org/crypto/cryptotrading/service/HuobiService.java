@@ -1,14 +1,11 @@
 package org.crypto.cryptotrading.service;
 
-import org.crypto.cryptotrading.dto.HuobiPrice;
-import org.crypto.cryptotrading.dto.HuobiResponse;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.crypto.cryptotrading.dto.HuobiPrice;
+import org.crypto.cryptotrading.dto.HuobiResponse;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class HuobiService {

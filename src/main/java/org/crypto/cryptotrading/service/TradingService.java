@@ -1,6 +1,8 @@
 package org.crypto.cryptotrading.service;
 
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import org.crypto.cryptotrading.dto.TradingRequest;
 import org.crypto.cryptotrading.entity.Crypto;
 import org.crypto.cryptotrading.entity.Transactions;
@@ -11,9 +13,6 @@ import org.crypto.cryptotrading.repository.TransactionsRepository;
 import org.crypto.cryptotrading.repository.UserRepository;
 import org.crypto.cryptotrading.repository.WalletRepository;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Service
 public class TradingService {

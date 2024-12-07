@@ -1,18 +1,14 @@
 package org.crypto.cryptotrading.service;
 
+import java.util.List;
 import org.crypto.cryptotrading.dto.BinancePrice;
 import org.crypto.cryptotrading.dto.HuobiPrice;
 import org.crypto.cryptotrading.dto.mapper.CryptoMapper;
 import org.crypto.cryptotrading.entity.Crypto;
 import org.crypto.cryptotrading.repository.CryptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PriceAggregationService {
