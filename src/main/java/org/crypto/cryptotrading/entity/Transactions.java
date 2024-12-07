@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
 @Table(name = "transactions")
 public class Transactions {
@@ -33,4 +32,79 @@ public class Transactions {
 
   @Column(nullable = false)
   private LocalDateTime timestamp;
+
+  public Transactions() {}
+
+  public Transactions(
+      Long id,
+      Long userId,
+      String cryptoSymbol,
+      String transactionType,
+      BigDecimal amount,
+      BigDecimal price,
+      LocalDateTime timestamp) {
+    this.id = id;
+    this.userId = userId;
+    this.cryptoSymbol = cryptoSymbol;
+    this.transactionType = transactionType;
+    this.amount = amount;
+    this.price = price;
+    this.timestamp = timestamp;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
+  public String getCryptoSymbol() {
+    return cryptoSymbol;
+  }
+
+  public void setCryptoSymbol(String cryptoSymbol) {
+    this.cryptoSymbol = cryptoSymbol;
+  }
+
+  public String getTransactionType() {
+    return transactionType;
+  }
+
+  public void setTransactionType(String transactionType) {
+    this.transactionType = transactionType;
+  }
+
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
+  }
+
+  public BigDecimal getPrice() {
+    return price;
+  }
+
+  public void setPrice(BigDecimal price) {
+    this.price = price;
+  }
+
+  public LocalDateTime getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(LocalDateTime timestamp) {
+    this.timestamp = timestamp;
+  }
 }
