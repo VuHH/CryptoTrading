@@ -1,7 +1,6 @@
 package org.crypto.cryptotrading.service;
 
 import org.crypto.cryptotrading.dto.BinancePrice;
-import org.crypto.cryptotrading.entity.Crypto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +26,7 @@ public class BinanceService {
       throw new RuntimeException("No data received from Binance API");
     }
     return Arrays.stream(binanceResponse.getBody())
-        .filter(price -> "btcusdt".equals(price.getSymbol()) || "ethusdt".equals(price.getSymbol()))
+        .filter(price -> "BTCUSDT".equals(price.getSymbol()) || "ETHUSDT".equals(price.getSymbol()))
         .collect(Collectors.toList());
   }
 }

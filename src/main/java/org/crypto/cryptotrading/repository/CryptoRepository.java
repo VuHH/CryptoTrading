@@ -17,4 +17,6 @@ public interface CryptoRepository extends JpaRepository<Crypto, Long> {
   @Query(
       "UPDATE Crypto c SET c.bidPrice = :bidPrice, c.askPrice = :askPrice, c.lastUpdated = CURRENT_TIMESTAMP WHERE c.cryptoSymbol = :cryptoSymbol")
   int updateCryptoPrices(String cryptoSymbol, BigDecimal bidPrice, BigDecimal askPrice);
+
+  Crypto findByCryptoSymbol(String cryptoSymbol);
 }
