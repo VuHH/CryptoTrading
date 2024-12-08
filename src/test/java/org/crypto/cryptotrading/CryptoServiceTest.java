@@ -39,7 +39,7 @@ public class CryptoServiceTest {
     assertEquals(2, binancePriceList.size());
     // Save Database
     List<Crypto> cryptoList = cryptoMapper.mapPricesToCrypto(binancePriceList, huobiPriceList);
-    cryptoList.forEach(cryptoService::saveOrUpdateCrypto);
+    cryptoService.saveOrUpdateCryptos(cryptoList);
 
     List<Crypto> cryptos = cryptoService.getCryptos();
     assertEquals(2, cryptos.size());
@@ -63,7 +63,7 @@ public class CryptoServiceTest {
 
     // Save to DB
     List<Crypto> cryptoList = cryptoMapper.mapPricesToCrypto(binancePriceList, huobiPriceList);
-    cryptoList.forEach(cryptoService::saveOrUpdateCrypto);
+    cryptoService.saveOrUpdateCryptos(cryptoList);
 
     // Validate the results
     Crypto cryptoBTC = cryptoService.findCryptoBySymbol("BTC");
