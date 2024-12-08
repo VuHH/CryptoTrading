@@ -8,6 +8,7 @@ import org.crypto.cryptotrading.repository.CryptoRepository;
 import org.crypto.cryptotrading.repository.TransactionsRepository;
 import org.crypto.cryptotrading.repository.UserRepository;
 import org.crypto.cryptotrading.repository.WalletRepository;
+import org.crypto.cryptotrading.service.PriceAggregationService;
 import org.crypto.cryptotrading.service.TradingService;
 import org.crypto.cryptotrading.service.TransactionService;
 import org.junit.jupiter.api.AutoClose;
@@ -33,6 +34,7 @@ class TradingServiceTests {
   private UserRepository userRepository;
   private TradingService tradingService;
   @Autowired private TransactionsRepository transactionsRepository;
+  @Autowired private PriceAggregationService priceAggregationService;
 
   @BeforeEach
   void setUp() {
@@ -41,7 +43,10 @@ class TradingServiceTests {
     userRepository = mock(UserRepository.class);
     tradingService =
         new TradingService(
-            transactionsRepository, cryptoRepository, walletRepository, userRepository);
+            transactionsRepository,
+            walletRepository,
+            userRepository,
+            priceAggregationService);
   }
 
   @Test

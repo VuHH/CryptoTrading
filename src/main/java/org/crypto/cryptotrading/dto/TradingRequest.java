@@ -11,7 +11,7 @@ public class TradingRequest {
   private Long userId;
 
   @NotEmpty(message = "Symbol cannot be empty")
-  @Pattern(regexp = "^(BTC|ETH)$", message = "Symbol must be either BTCUSDT or ETHUSDT")
+  @Pattern(regexp = "^(BTC|ETH)$", message = "Symbol must be either BTC or ETH")
   private String symbol;
 
   @NotEmpty(message = "Trading type cannot be empty")

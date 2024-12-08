@@ -21,18 +21,17 @@ public class TradingService {
   private static final Logger logger = LoggerFactory.getLogger(TradingService.class);
 
   private final TransactionsRepository transactionsRepository;
-  private final CryptoRepository cryptoRepository;
   private final WalletRepository walletRepository;
   private final UserRepository userRepository;
+  private final PriceAggregationService priceAggregationService;
 
   public TradingService(
           TransactionsRepository transactionsRepository,
-          CryptoRepository cryptoRepository,
-          WalletRepository walletRepository, UserRepository userRepository) {
+          WalletRepository walletRepository, UserRepository userRepository, PriceAggregationService priceAggregationService) {
     this.transactionsRepository = transactionsRepository;
-    this.cryptoRepository = cryptoRepository;
     this.walletRepository = walletRepository;
       this.userRepository = userRepository;
+      this.priceAggregationService = priceAggregationService;
   }
 
   @Transactional
@@ -46,7 +45,7 @@ public class TradingService {
     BigDecimal amount = tradeRequest.getAmount();
 
     // Fetch crypto details
-    Crypto crypto = cryptoRepository.findByCryptoSymbol(symbol);
+    Crypto crypto = priceAggregationService.getCryptoBySymbol(symbol);
     if (crypto == null) {
       logger.error("Invalid crypto symbol: {}", symbol);
       throw new IllegalArgumentException("Invalid trading crypto: " + symbol);
