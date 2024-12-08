@@ -22,6 +22,10 @@ public class TradingRequest {
   @DecimalMin(value = "0.0001", message = "Amount must be greater than or equal to 0.0001")
   private BigDecimal amount;
 
+  @NotNull(message = "Price cannot be null")
+  @DecimalMin(value = "0.0001", message = "Amount must be greater than or equal to 0.0001")
+  private BigDecimal priceCrypto;
+
   public TradingRequest() {
   }
 
@@ -62,5 +66,13 @@ public class TradingRequest {
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount;
+  }
+
+  public BigDecimal getPriceCrypto() {
+    return priceCrypto;
+  }
+
+  public void setPriceCrypto(BigDecimal priceCrypto) {
+    this.priceCrypto = priceCrypto;
   }
 }

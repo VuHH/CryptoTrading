@@ -8,7 +8,6 @@ import org.crypto.cryptotrading.entity.Crypto;
 import org.crypto.cryptotrading.entity.Transactions;
 import org.crypto.cryptotrading.entity.User;
 import org.crypto.cryptotrading.entity.Wallet;
-import org.crypto.cryptotrading.repository.CryptoRepository;
 import org.crypto.cryptotrading.repository.TransactionsRepository;
 import org.crypto.cryptotrading.repository.UserRepository;
 import org.crypto.cryptotrading.repository.WalletRepository;
@@ -54,7 +53,7 @@ public class TradingService {
             symbol, crypto.getBidPrice(), crypto.getAskPrice());
 
     // Determine the price based on trade type
-    BigDecimal priceCrypto = "BUY".equals(typeTrade) ? crypto.getAskPrice() : crypto.getBidPrice();
+    BigDecimal priceCrypto = tradeRequest.getPriceCrypto();
     BigDecimal totalCost = amount.multiply(priceCrypto);
     logger.info("Calculated total cost: {} for trade type: {}", totalCost, typeTrade);
 
