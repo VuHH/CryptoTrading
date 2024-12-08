@@ -42,7 +42,7 @@ This project implements a **Crypto Trading System** using the Spring Boot framew
 
 - Allows users to `BUY` or `SELL` cryptocurrencies based on the latest best price.
 - Updates wallet balances and creates a record of the transaction.
-- **Update in future**: Matching Order
+- **Update in future: Matching Order, Partial Order, Kafka**
 
 ### **4. Wallet Balance API**
 
