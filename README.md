@@ -199,4 +199,8 @@ This project implements a **Crypto Trading System** using the Spring Boot framew
     }
 ]
 ```
+✨ Authors and contributions
+Vu Ho: hohoanvu1993@gmail.com
+
+
 
