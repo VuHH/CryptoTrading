@@ -40,19 +40,19 @@ public class TradingController {
     }
   }
 
-  //  @PostMapping
-  //  public ResponseEntity<?> executeOrder(@Valid @RequestBody Order order) {
-  //    try {
-  //      Long transactionId = orderService.createOrder(order);
-  //      return ResponseEntity.ok()
-  //              .body(
-  //                      Map.of(
-  //                              "status", "SUCCESS",
-  //                              "message", "Trade executed successfully",
-  //                              "transactionId", transactionId));
-  //    } catch (RuntimeException e) {
-  //      return ResponseEntity.badRequest()
-  //              .body(Map.of("status", "FAILED", "message", e.getMessage()));
-  //    }
-  //  }
+//    @PostMapping
+//    public ResponseEntity<?> executeOrder(@Valid @RequestBody Order order) {
+//      try {
+//        Long transactionId = orderService.createOrder(order);
+//        return ResponseEntity.ok()
+//                .body(
+//                        Map.of(
+//                                "status", "SUCCESS",
+//                                "message", "Trade executed successfully",
+//                                "transactionId", transactionId));
+//      } catch (RuntimeException e) {
+//        return ResponseEntity.badRequest()
+//                .body(Map.of("status", "FAILED", "message", e.getMessage()));
+//      }
+//    }
 }
