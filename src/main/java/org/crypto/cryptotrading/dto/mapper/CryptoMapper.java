@@ -4,41 +4,69 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.crypto.cryptotrading.dto.BinancePrice;
 import org.crypto.cryptotrading.dto.HuobiPrice;
 import org.crypto.cryptotrading.entity.Crypto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CryptoMapper {
+  private static final Logger logger = LoggerFactory.getLogger(CryptoMapper.class);
+
   public List<Crypto> mapPricesToCrypto(
       List<BinancePrice> binancePrices, List<HuobiPrice> huobiPrices) {
+
+    // Create a map of Huobi prices for quick lookup by symbol (case-insensitive)
     Map<String, HuobiPrice> huobiPriceMap =
         huobiPrices.stream()
-            .collect(Collectors.toMap(HuobiPrice::getSymbol, huobiPrice -> huobiPrice));
+            .collect(
+                Collectors.toMap(
+                    huobiPrice ->
+                        huobiPrice.getSymbol().toLowerCase(), // Normalize to lowercase for matching
+                    huobiPrice -> huobiPrice));
 
+    // Filter and map Binance prices to Crypto objects
     return binancePrices.stream()
         .filter(
             binancePrice ->
-                "BTCUSDT".equals(binancePrice.getSymbol())
-                    || "ETHUSDT".equals(binancePrice.getSymbol()))
+                binancePrice != null
+                    && ("BTCUSDT".equals(binancePrice.getSymbol())
+                        || "ETHUSDT".equals(binancePrice.getSymbol())))
         .map(
             binancePrice -> {
+              // Find corresponding HuobiPrice (case-insensitive)
               HuobiPrice huobiPrice = huobiPriceMap.get(binancePrice.getSymbol().toLowerCase());
+
+              // Skip processing if the corresponding Huobi price is not found
+              if (huobiPrice == null) {
+                logger.warn("No matching Huobi price for symbol: {}", binancePrice.getSymbol());
+                return null;
+              }
+
+              // Create and populate a Crypto object
               Crypto crypto = new Crypto();
               crypto.setCryptoSymbol(extractSymbol(binancePrice.getSymbol()));
               crypto.setBidPrice(
-                  binancePrice.getBidPrice() != 0
-                      ? BigDecimal.valueOf(binancePrice.getBidPrice())
-                      : BigDecimal.valueOf(huobiPrice.getBid()));
+                  BigDecimal.valueOf(
+                      Math.max(
+                          binancePrice.getBidPrice(),
+                          huobiPrice.getBid()) // Best aggregated SELL price
+                      ));
               crypto.setAskPrice(
-                  binancePrice.getAskPrice() != 0
-                      ? BigDecimal.valueOf(binancePrice.getAskPrice())
-                      : BigDecimal.valueOf(huobiPrice.getAsk()));
+                  BigDecimal.valueOf(
+                      Math.min(
+                          binancePrice.getAskPrice(),
+                          huobiPrice.getAsk()) // Best aggregated BUY price
+                      ));
               crypto.setLastUpdated(LocalDateTime.now());
+
               return crypto;
             })
+        .filter(Objects::nonNull) // Remove null entries (if any HuobiPrice was missing)
         .collect(Collectors.toList());
   }
 

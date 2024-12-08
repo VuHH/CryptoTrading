@@ -1,12 +1,29 @@
 package org.crypto.cryptotrading.dto;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
 public class TradingRequest {
+  @NotNull(message = "User ID cannot be null")
   private Long userId;
+
+  @NotEmpty(message = "Symbol cannot be empty")
+  @Pattern(regexp = "^(BTC|ETH)$", message = "Symbol must be either BTCUSDT or ETHUSDT")
   private String symbol;
+
+  @NotEmpty(message = "Trading type cannot be empty")
+  @Pattern(regexp = "^(BUY|SELL)$", message = "Type must be either BUY or SELL")
   private String typeTrading;
+
+  @NotNull(message = "Amount cannot be null")
+  @DecimalMin(value = "0.0001", message = "Amount must be greater than or equal to 0.0001")
   private BigDecimal amount;
+
+  public TradingRequest() {
+  }
 
   public TradingRequest(Long userId, String symbol, String typeTrading, BigDecimal amount) {
     this.userId = userId;

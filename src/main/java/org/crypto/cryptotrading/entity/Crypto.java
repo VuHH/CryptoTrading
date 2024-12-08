@@ -23,6 +23,22 @@ public class Crypto {
   @Column(name = "last_updated")
   private LocalDateTime lastUpdated;
 
+  public Crypto() {
+  }
+
+  public Crypto(
+      Long id,
+      String cryptoSymbol,
+      BigDecimal bidPrice,
+      BigDecimal askPrice,
+      LocalDateTime lastUpdated) {
+    this.id = id;
+    this.cryptoSymbol = cryptoSymbol;
+    this.bidPrice = bidPrice;
+    this.askPrice = askPrice;
+    this.lastUpdated = lastUpdated;
+  }
+
   public Long getId() {
     return id;
   }
