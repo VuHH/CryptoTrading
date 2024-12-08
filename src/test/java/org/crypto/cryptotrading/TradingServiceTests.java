@@ -1,6 +1,6 @@
 package org.crypto.cryptotrading;
 
-import org.crypto.cryptotrading.dto.TradingRequest;
+import org.crypto.cryptotrading.dto.Order;
 import org.crypto.cryptotrading.entity.Crypto;
 import org.crypto.cryptotrading.entity.User;
 import org.crypto.cryptotrading.entity.Wallet;
@@ -10,8 +10,6 @@ import org.crypto.cryptotrading.repository.UserRepository;
 import org.crypto.cryptotrading.repository.WalletRepository;
 import org.crypto.cryptotrading.service.PriceAggregationService;
 import org.crypto.cryptotrading.service.TradingService;
-import org.crypto.cryptotrading.service.TransactionService;
-import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +49,7 @@ class TradingServiceTests {
 
   @Test
   void testExecuteBuyTrade_Success() {
-    TradingRequest request = new TradingRequest();
+    Order request = new Order();
     request.setUserId(1L);
     request.setSymbol("BTC");
     request.setTypeTrading("BUY");
@@ -77,7 +75,7 @@ class TradingServiceTests {
 
   @Test
   void testExecuteTrade_InvalidSymbol() {
-    TradingRequest request = new TradingRequest();
+    Order request = new Order();
     request.setUserId(1L);
     request.setSymbol("INVALID");
     request.setTypeTrading("BUY");
@@ -93,7 +91,7 @@ class TradingServiceTests {
 
   @Test
   void testExecuteTrade_WalletNotFound() {
-    TradingRequest request = new TradingRequest();
+    Order request = new Order();
     request.setUserId(1L);
     request.setSymbol("BTC");
     request.setTypeTrading("BUY");
@@ -113,7 +111,7 @@ class TradingServiceTests {
 
   @Test
   void testExecuteTrade_UserNotFound() {
-    TradingRequest request = new TradingRequest();
+    Order request = new Order();
     request.setUserId(1L);
     request.setSymbol("BTC");
     request.setTypeTrading("BUY");
@@ -136,7 +134,7 @@ class TradingServiceTests {
 
   @Test
   void testExecuteTrade_InvalidTradeType() {
-    TradingRequest request = new TradingRequest();
+    Order request = new Order();
     request.setUserId(1L);
     request.setSymbol("BTC");
     request.setTypeTrading("INVALID");

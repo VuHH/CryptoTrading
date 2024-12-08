@@ -3,7 +3,7 @@ package org.crypto.cryptotrading.service;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import org.crypto.cryptotrading.dto.TradingRequest;
+import org.crypto.cryptotrading.dto.Order;
 import org.crypto.cryptotrading.entity.Crypto;
 import org.crypto.cryptotrading.entity.Transactions;
 import org.crypto.cryptotrading.entity.User;
@@ -34,14 +34,14 @@ public class TradingService {
   }
 
   @Transactional
-  public Long executeTrade(TradingRequest tradeRequest) {
+  public Long executeTrade(Order orderRequest) {
     logger.info("Starting trade execution for userId: {}, symbol: {}, type: {}, amount: {}",
-            tradeRequest.getUserId(), tradeRequest.getSymbol(), tradeRequest.getTypeTrading(), tradeRequest.getAmount());
+            orderRequest.getUserId(), orderRequest.getSymbol(), orderRequest.getTypeTrading(), orderRequest.getAmount());
 
     // Validate trading request details
-    String symbol = tradeRequest.getSymbol();
-    String typeTrade = tradeRequest.getTypeTrading().toUpperCase();
-    BigDecimal amount = tradeRequest.getAmount();
+    String symbol = orderRequest.getSymbol();
+    String typeTrade = orderRequest.getTypeTrading().toUpperCase();
+    BigDecimal amount = orderRequest.getAmount();
 
     // Fetch crypto details
     Crypto crypto = priceAggregationService.getCryptoBySymbol(symbol);
@@ -53,30 +53,30 @@ public class TradingService {
             symbol, crypto.getBidPrice(), crypto.getAskPrice());
 
     // Determine the price based on trade type
-    BigDecimal priceCrypto = tradeRequest.getPriceCrypto();
+    BigDecimal priceCrypto = orderRequest.getPriceCrypto();
     BigDecimal totalCost = amount.multiply(priceCrypto);
     logger.info("Calculated total cost: {} for trade type: {}", totalCost, typeTrade);
 
     // Fetch wallet and user details
-    Wallet cryptoWallet = walletRepository.findByUserIdAndCryptoSymbol(tradeRequest.getUserId(), symbol);
+    Wallet cryptoWallet = walletRepository.findByUserIdAndCryptoSymbol(orderRequest.getUserId(), symbol);
     if (cryptoWallet == null) {
-      logger.error("Crypto wallet not found for userId: {}, symbol: {}", tradeRequest.getUserId(), symbol);
-      throw new IllegalStateException("Crypto wallet not found for userId: " + tradeRequest.getUserId());
+      logger.error("Crypto wallet not found for userId: {}, symbol: {}", orderRequest.getUserId(), symbol);
+      throw new IllegalStateException("Crypto wallet not found for userId: " + orderRequest.getUserId());
     }
 
-    User userWallet = userRepository.findById(tradeRequest.getUserId())
+    User userWallet = userRepository.findById(orderRequest.getUserId())
             .orElseThrow(() -> {
-              logger.error("User not found with userId: {}", tradeRequest.getUserId());
-              return new IllegalStateException("User not found: " + tradeRequest.getUserId());
+              logger.error("User not found with userId: {}", orderRequest.getUserId());
+              return new IllegalStateException("User not found: " + orderRequest.getUserId());
             });
-    logger.info("Fetched wallet details for userId: {}", tradeRequest.getUserId());
+    logger.info("Fetched wallet details for userId: {}", orderRequest.getUserId());
 
     // Perform trade
     if ("BUY".equals(typeTrade)) {
-      logger.info("Processing BUY trade for userId: {}, symbol: {}, amount: {}", tradeRequest.getUserId(), symbol, amount);
+      logger.info("Processing BUY trade for userId: {}, symbol: {}, amount: {}", orderRequest.getUserId(), symbol, amount);
       processBuyTrade(userWallet, cryptoWallet, amount, totalCost);
     } else if ("SELL".equals(typeTrade)) {
-      logger.info("Processing SELL trade for userId: {}, symbol: {}, amount: {}", tradeRequest.getUserId(), symbol, amount);
+      logger.info("Processing SELL trade for userId: {}, symbol: {}, amount: {}", orderRequest.getUserId(), symbol, amount);
       processSellTrade(userWallet, cryptoWallet, amount, totalCost);
     } else {
       logger.error("Invalid trade type: {}", typeTrade);
@@ -86,10 +86,10 @@ public class TradingService {
     // Save wallet and user updates
     walletRepository.save(cryptoWallet);
     userRepository.save(userWallet);
-    logger.info("Updated wallet and user balances successfully for userId: {}", tradeRequest.getUserId());
+    logger.info("Updated wallet and user balances successfully for userId: {}", orderRequest.getUserId());
 
     // Record the transaction
-    Transactions transaction = recordTransaction(tradeRequest.getUserId(), symbol, amount, typeTrade, totalCost);
+    Transactions transaction = recordTransaction(orderRequest.getUserId(), symbol, amount, typeTrade, totalCost);
     logger.info("Recorded transaction with ID: {}", transaction.getId());
 
     return transaction.getId();

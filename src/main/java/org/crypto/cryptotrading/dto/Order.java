@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
-public class TradingRequest {
+public class Order {
+
+  private String orderId;
+
   @NotNull(message = "User ID cannot be null")
   private Long userId;
 
@@ -26,14 +29,29 @@ public class TradingRequest {
   @DecimalMin(value = "0.0001", message = "Amount must be greater than or equal to 0.0001")
   private BigDecimal priceCrypto;
 
-  public TradingRequest() {
-  }
+  public Order() {}
 
-  public TradingRequest(Long userId, String symbol, String typeTrading, BigDecimal amount) {
+  public Order(
+      String orderId,
+      Long userId,
+      String symbol,
+      String typeTrading,
+      BigDecimal amount,
+      BigDecimal priceCrypto) {
+    this.orderId = orderId;
     this.userId = userId;
     this.symbol = symbol;
     this.typeTrading = typeTrading;
     this.amount = amount;
+    this.priceCrypto = priceCrypto;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
   }
 
   public Long getUserId() {
